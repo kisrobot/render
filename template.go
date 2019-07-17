@@ -108,6 +108,9 @@ func (tmpl *Template) Render(templateName string, obj interface{}, request *http
 				if err = t.Execute(&tpl, obj); err == nil {
 					return template.HTML(tpl.String()), nil
 				}
+			} else {
+				err = fmt.Errorf("Failed to parse layout: '%v.tmpl', got error: %v", filepath.Join("layouts", tmpl.layout), err)
+				fmt.Println(err)
 			}
 		} else if !usingDefaultLayout {
 			err = fmt.Errorf("Failed to render layout: '%v.tmpl', got error: %v", filepath.Join("layouts", tmpl.layout), err)
